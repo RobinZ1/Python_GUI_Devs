@@ -339,3 +339,47 @@ window.mainloop()
 登录界面进行登录
 '''
 
+import tkinter as tk
+import tkinter.messagebox
+import pickle
+
+window = tk.Tk()
+
+window.title('Welcome to 3K04!')
+
+window.geometry('400x300')
+
+# welcome page
+canvas = tk.Canvas(window, width=400, height=135, bg='green')
+image_file = tk.PhotoImage(file='3k04.jpg')
+image = canvas.create_image(200,0, anchor='n',image=image_file)
+canvas.pack(side='top')
+tk.Label(window, text='Welcome',font=('Arial',16)).pack()
+
+#User information
+tk.Label(window, text='MAC ID:',font=('Arial',14)).place(x=10,y=170)
+tk.Label(window, text='MAC Password:',font=('Arial',14)).place(x=10,y=210)
+
+# User login entry
+#usr name
+var_usr_name = tk.StringVar()
+var_usr_name.set('example@mcmaster.ca')
+entry_usr_name = tk.Entry(window, textvariable = var_usr_name, font=('Arial',14))
+entry_usr_name.place(x=120,y=175)
+#usr password
+var_usr_pwd = tk.StringVar()
+entry_usr_pwd = tk.Entry(window, textvariable=var_usr_pwd, font=('Arial',14), show='*')
+entry_usr_pwd.place(x=120,y=215)
+
+#define user login function:
+def usr_login():
+    usr_name = var_usr_name.get()
+    usr_pwd = var_usr_pwd.get()
+
+    ss
+
+
+
+
+
+
