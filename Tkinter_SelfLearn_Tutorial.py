@@ -192,8 +192,150 @@ window.mainloop()
 '''
 
 
+# Scale
+'''
+import tkinter as tk
+
+window = tk.Tk()
+window.title('My Window')
+window.geometry('500x300')
+l = tk.Label(window, bg = 'green', fg='white', width=20, text='empty')
+l.pack()
+
+def print_selection(v):
+    l.config(text='You have selected'+v)
+    
+s = tk.Scale(window, label='try me', from_ =0, to= 10, orient=tk.HORIZONTAL, length=200, showvalue=0, tickinterval=2, resolution=0.01, command=print_selection)
+s.pack()
+
+window.mainloop()
+'''
+
+# Canvas
+'''
+import tkinter as tk
+window = tk.Tk()
+window.title('My Window')
+window.geometry('500x300')
+canvas = tk.Canvas(window, bg='green',height=200, width=500)
+image_file = tk.PhotoImage(file='pic.gif') #must be in the same folder
+image = canvas.create_image(250, 0, anchor='n', image=image_file)
+
+x0, y0, x1, y1 = 100,100,150,150
+line = canvas.create_line(x0-50, y0-50, x1-50, y1-50)
+oval = canvas.create_oval(x0+120, y0+50, x1+120, y1+50, fill='yellow')
+arc = canvas.create_arc(x0, y0+50, x1, y1+50, start=0, extent = 180)
+rect = canvas.create_rectangle(330, 30, 330+20, 30+20)
+canvas.pack()
+
+def moveit():
+    canvas.move(rect, 2, 2)
+
+b = tk.Button(window, text='move item', command=moveit).pack()
+
+window.mainloop()
+'''
 
 
 
 
+# Menu
+'''
+import tkinter as tk
+window = tk.Tk()
+window.title()
+window.geometry('500x300')
+l = tk.Label(window, text=' ', bg='green')
+l.pack()
+
+counter = 0
+def do_job():
+    global counter
+    l.config(text='do '+str(counter))
+    counter += 1
+
+menubar = tk.Menu(window)
+filemenu = tk.Menu(menubar, tearoff=0)
+menubar.add_cascade(label='File', menu = filemenu)
+
+filemenu.add_command(label='New',command=do_job)
+filemenu.add_command(label='Open',command=do_job)
+filemenu.add_command(label='Save',command=do_job)
+filemenu.add_separator()
+filemenu.add_command(label='Exit',command=window.quit)
+
+editmenu = tk.Menu(menubar, tearoff=0)
+menubar.add_cascade(label='Edit',menu=editmenu)
+
+editmenu.add_command(label='Cut',command=do_job)
+editmenu.add_command(label='Copy',command=do_job)
+editmenu.add_command(label='Paste',command=do_job)
+
+submenu = tk.Menu(filemenu)
+filemenu.add_cascade(label='Import',menu=submenu, underline=0)
+
+submenu.add_command(label='Submenu_1', command=do_job)
+
+
+window.config(menu = menubar)
+window.mainloop()
+'''
+
+
+#Frame 
+'''
+import tkinter as tk
+window = tk.Tk()
+window.title('My Window')
+window.geometry('500x300')
+tk.Label(window, text = 'On the window', bg='red', font=('Arial',16)).pack()
+
+frame = tk.Frame(window)
+frame.pack()
+frame_l = tk.Frame(frame)
+frame_r = tk.Frame(frame)
+frame_l.pack(side='left')
+frame_r.pack(side='right')
+
+tk.Label(frame_l, text='on the frame_l1', bg='green').pack()
+tk.Label(frame_l, text='on the frame_l2', bg='green').pack()
+tk.Label(frame_l, text='on the frame_l3', bg='green').pack()
+tk.Label(frame_r, text='on the frame_r1', bg='yellow').pack()
+tk.Label(frame_r, text='on the frame_r2', bg='yellow').pack()
+tk.Label(frame_r, text='on the frame_r3', bg='yellow').pack()
+
+window.mainloop()
+
+'''
+
+# messageBox
+'''
+import tkinter as tk
+import tkinter.messagebox
+
+window = tk.Tk()
+window.title('My Window')
+window.geometry('500x300')
+
+def hit_me():
+    #tkinter.messagebox.showinfo(title='Hi',message='你好！')
+    #tkinter.messagebox.showwarning(title='Hi',messange='警告')
+    #tkinter.messagebox.showerror(title='Hi',messange='错误')
+    print(tkinter.messagebox.askquestion(title='Hi',message='你好'))
+    #print(tkinter.messagebox.askyesno(title='Hi', message='你好'))
+
+tk.Button(window, text='hit me', bg='green',font=('Arial',14), command=hit_me).pack()
+
+window.mainloop()
+'''
+
+# The Grid/Pack/Place geometry Manager
+
+# Real Practice, Dynamic Login page
+
+'''编写一个用户登录界面， 用户可以登录账户信息，如果账户已经存在，
+可以直接登录， 登录名或者登录密码输入错误会提示， 如果账户不存在，
+提示用户注册，点击注册进去注册页面， 输入注册信息，确定后便可以返回
+登录界面进行登录
+'''
 
