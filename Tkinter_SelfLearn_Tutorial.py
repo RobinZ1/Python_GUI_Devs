@@ -351,7 +351,7 @@ window.geometry('400x300')
 
 # welcome page
 canvas = tk.Canvas(window, width=400, height=135, bg='green')
-image_file = tk.PhotoImage(file='3k04.jpg')
+image_file = tk.PhotoImage(file='3k04.gif')
 image = canvas.create_image(200,0, anchor='n',image=image_file)
 canvas.pack(side='top')
 tk.Label(window, text='Welcome',font=('Arial',16)).pack()
@@ -376,10 +376,85 @@ def usr_login():
     usr_name = var_usr_name.get()
     usr_pwd = var_usr_pwd.get()
 
-    ss
+    try:
+        with open('usrs_info.pickle','rb') as usr_file:
+            usrs_info = pickle.load(usr_file)
+    except FileNotFoundError:
+        with open('usrs_info.pickle','wb') as usr_file:
+            usrs_info = {'admin':'admin'}
+            pickle.dump(usrs_info, usr_file)
+            usr_file.close()
+
+    #if user name and password match the record in the file, login success
+    if usr_name in usrs_info:
+        if usr_pwd == usrs_info[usr_name]:
+            tkinter.messagebox.showinfo(title='Welcome',message='You have signed into the pacemaker monitor center!'+usr_name)
+
+        else:
+            tkinter.messagebox.showerror(message='Error, your password is wrong, try again!')
+
+    else:
+        is_sign_up = tkinter.messagebox.askyesno('Welcome! ','You have not registered yet. Sign up now?')
+
+        if is_sign_up:
+            usr_sign_up()
+
+# define usr registration function
+def usr_sign_up():
+    def sign_to_pacemaker_MonitorCenter():
+        np = new_pwd.get()
+        npf = new_pwd_confirm.get()
+        nn = new_name.get()
+
+        with open('usrs_info.pickle','rb')as usr_file:
+            exist_usr_info = pickle.load(usr_file)
+
+        if np != npf:
+            tkinter.messagebox.showerror('Error','Password and confirm password must be the same!')
+        
+        elif nn in exist_usr_info:
+            tkinter.messagebox.showerror('Error','The user has already signed up!')
+        
+        else:
+            exist_usr_info[nn] = np
+            with open('usrs_info.pickle','wb') as usr_file:
+                pickle.dump(exist_usr_info, usr_file)
+                
+            tkinter.messagebox.showinfo('Welcome','You have successfully signed up!')
+
+            window_sign_up.destroy()
 
 
+    window_sign_up = tk.Toplevel(window)
+    window_sign_up.geometry('300x200')
+    window_sign_up.title('Sign up window')
+
+    new_name = tk.StringVar()
+    new_name.set('example@mcmaster.ca')
+    tk.Label(window_sign_up, text='User name: ').place(x=10,y=10)
+    entry_new_name = tk.Entry(window_sign_up, textvariable=new_name)
+    entry_new_name.place(x=130, y=10)
+
+    new_pwd = tk.StringVar()
+    tk.Label(window_sign_up, text='Password: ').place(x=10,y=90)
+    entry_usr_pwd = tk.Entry(window_sign_up, textvariable=new_pwd, show='*')
+    entry_usr_pwd.place(x=130,y=50)
+
+    new_pwd_confirm = tk.StringVar()
+    tk.Label(window_sign_up, text='Confirm Password: ').place(x=10,y=90)
+    entry_usr_pwd_confirm = tk.Entry(window_sign_up, textvariable=new_pwd_confirm, show='*')
+    entry_usr_pwd_confirm.place(x=130,y=50)
+
+    btn_confirm_sign_up = tk.Button(window_sign_up, text='Sign up', command=sign_to_pacemaker_MonitorCenter)
+    btn_confirm_sign_up.place(x=180,y=120)
+
+btn_login = tk.Button(window, text='Login', command=usr_login)
+btn_login.place(x=120,y=240)
+btn_sign_up = tk.Button(window, text='Sign up',command=usr_sign_up)
+btn_sign_up.place(x=200,y=240)
+
+window.mainloop()
 
 
-
-
+        
+        
